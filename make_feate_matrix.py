@@ -47,3 +47,6 @@ for subject in subjects:
         shss.loc[shss["id"] == int(subject)].score.get_values()[0])
 
     all_data = all_data.append(both, ignore_index=True)
+
+
+all_data.to_csv(data_path + "/all_data.csv", index=False)
