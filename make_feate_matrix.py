@@ -1,16 +1,19 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import glob
+import os
 
 plt.style.use("ggplot")
 
-subject = "0005"
+# data_path = "/Users/au194693/projects/hyp_struct/data"
+data_path = "/projects/MINDLAB2011_33-MR-high-order-cogn/" +\
+            "scratch/Hypnoproj/MJ/data"
+os.chdir(data_path)
 
 file_list = glob.glob("*PALS*BA*")
 subjects = list(set([f[:4] for f in file_list]))
 subjects.sort()
 
-data_path = "/Users/au194693/projects/hyp_struct/data"
 columns_lh = [
     "StructName", "NumVert_lh", "SurfArea_lh", "GrayVol_lh", "ThickAvg_lh",
     "ThickStd_lh", "MeanCurv_lh", "GausCurv_lh", "FoldInd_lh", "CurvInd_lh"
