@@ -43,7 +43,8 @@ adaboost_params = {
 }
 
 grid = GridSearchCV(
-    ada, param_grid=adaboost_params, cv=loo, verbose=1, n_jobs=2)
+    ada, param_grid=adaboost_params, cv=loo, verbose=1, n_jobs=2,
+    scoring="mean_squared_error")
 grid.fit(X, y)
 
 ada_cv = grid.best_estimator_
