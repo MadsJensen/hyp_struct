@@ -61,4 +61,6 @@ data/
 
 # ignore tmp files
 *.*~
-
+*.*\#
+*.Rh*
+*.\#*
