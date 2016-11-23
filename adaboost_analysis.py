@@ -34,7 +34,6 @@ y = y[2:]
 cv = ShuffleSplit(len(y), test_size=0.2)
 loo = LeaveOneOut(len(y))
 
-<<<<<<< HEAD
 grid_estimators = []
 scores_list = []
 
@@ -62,37 +61,3 @@ for train_cv, test_cv in cv:
     scores_list.append(
         cross_val_score(
             ada_cv, X[test_cv], y[test_cv], scoring="neg_mean_squared_error"))
-=======
-ada = AdaBoostRegressor()
-
-adaboost_params = {
-    "n_estimators": np.arange(2, 80, 1),
-    "learning_rate": np.arange(0.1, 1.1, 0.1)
-}
-
-grid = GridSearchCV(
-    ada, param_grid=adaboost_params, cv=loo, verbose=1, n_jobs=2,
-    scoring="mean_squared_error")
-grid.fit(X, y)
-
-ada_cv = grid.best_estimator_
-
-scores = cross_val_score(ada_cv, X, y, cv=loo, scoring="mean_squared_error")
-
-# XGboost
-cv_params = {
-    "learning_rate": np.arange(0.1, 1.1, 0.1),
-    "max_depth": [1, 2, 3, 4, 5, 6, 7],
-    "n_estimators": np.arange(10, 86, 2)
-}
-
-grid = GridSearchCV(
-    xgb.XGBClassifier(),
-    cv_params,
-    # scoring='accuracy',
-    cv=cv,
-    n_jobs=2,
-    verbose=1)
-grid.fit(X, y_group)
-xgb_cv = grid.best_estimator_
->>>>>>> 2a2ea1b30914d0b9509e5b8da99042d22d9a7328
