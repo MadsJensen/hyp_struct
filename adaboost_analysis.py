@@ -1,19 +1,18 @@
+import os
 import pandas as pd
 import numpy as np
+
 from sklearn.ensemble import AdaBoostRegressor
-from sklearn.cross_validation import (ShuffleSplit, LeaveOneOut,
-                                      cross_val_score)
+from sklearn.cross_validation import (ShuffleSplit, cross_val_score)
 from sklearn.grid_search import GridSearchCV
 # from sklearn.pipeline import make_pipeline
-import os
 
-data_path = "/Users/au194693/projects/hyp_struct/data"
-# data_path = "/projects/MINDLAB2011_33-MR-high-order-cogn/" +\
-#             "scratch/Hypnoproj/MJ/data"
+# data_path = "/Users/au194693/projects/hyp_struct/data"
+data_path = "/projects/MINDLAB2011_33-MR-high-order-cogn/" +\
+            "scratch/Hypnoproj/MJ/data"
 os.chdir(data_path)
 
 all_data = pd.read_csv("all_data.csv")
-
 data_selected = all_data[["id", "ThickAvg_lh", "ThickAvg_rh", "shss"]]
 
 X = []
@@ -32,7 +31,6 @@ X = X[2:, :-1]
 y = y[2:]
 
 cv = ShuffleSplit(len(y), test_size=0.2)
-loo = LeaveOneOut(len(y))
 
 grid_estimators = []
 scores_list = []
