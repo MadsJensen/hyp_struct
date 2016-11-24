@@ -5,7 +5,7 @@ import numpy as np
 from sklearn.ensemble import AdaBoostRegressor
 from sklearn.cross_validation import (ShuffleSplit, cross_val_score)
 from sklearn.grid_search import GridSearchCV
-from sklearn.metrics import neg_mean_squared_error
+from sklearn.metrics import mean_squared_error
 
 # data_path = "/Users/au194693/projects/hyp_struct/data"
 data_path = "/projects/MINDLAB2011_33-MR-high-order-cogn/" +\
@@ -30,7 +30,7 @@ y = np.asarray(y)
 X = X[2:, :-1]
 y = y[2:]
 
-cv = ShuffleSplit(len(y), test_size=0.2)
+cv = ShuffleSplit(len(y), test_size=0.1)
 
 grid_estimators = []
 scores_list = []
@@ -58,4 +58,4 @@ for train_cv, test_cv in cv:
 
     y_pred = ada_cv.predict(X[test_cv])
 
-    scores_list.append(neg_mean_squared_error(y[test_cv], y_pred))
+    scores_list.append(mean_squared_error(y[test_cv], y_pred))
