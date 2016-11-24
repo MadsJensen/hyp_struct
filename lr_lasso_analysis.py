@@ -30,7 +30,7 @@ y = np.asarray(y)
 X = X[2:, :-1]
 y = y[2:]
 
-cv = ShuffleSplit(len(y), test_size=0.1)
+cv = ShuffleSplit(len(y), test_size=0.15)
 
 grid_estimators = []
 scores_list = []
