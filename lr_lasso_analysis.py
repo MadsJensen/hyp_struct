@@ -42,3 +42,6 @@ for train_cv, test_cv in cv:
 
     grid_estimators.append(lasso_cv)
     scores_list.append(mean_squared_error(y[test_cv], y_pred))
+
+
+lr = np.asarray([foo.alphas_ for foo in grid_estimators])
