@@ -36,11 +36,20 @@ grid_estimators = []
 scores_list = []
 
 for train_cv, test_cv in cv:
+    lasso_params = {"n_alphas": np.arange(1, 82, 1)}
     lasso_cv = LassoCV()
-    lasso_cv.fit(X[train_cv], y[train_cv])
-    y_pred = lasso_cv.predict(X[test_cv])
+    grid = GridSearchCV(
+        lasso_cv,
+        param_grid=lasso_params,
+        scoring="mean_squared_error",
+        verbose=1,
+        n_jobs=1)
+    grid.fit(X[train_cv], y[train_cv])
 
-    grid_estimators.append(lasso_cv)
+    lasso_grid = grid.best_estimator_
+    y_pred = lasso_grid.predict(X[test_cv])
+
+    grid_estimators.append(lasso_grid)
     scores_list.append(mean_squared_error(y[test_cv], y_pred))
 
 
