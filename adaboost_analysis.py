@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 
 from sklearn.ensemble import AdaBoostRegressor
-from sklearn.cross_validation import (ShuffleSplit, cross_val_score)
+from sklearn.model_selection import (ShuffleSplit, cross_val_score)
 from sklearn.grid_search import GridSearchCV
 from sklearn.metrics import mean_squared_error
 
@@ -35,7 +35,7 @@ cv = ShuffleSplit(len(y), test_size=0.15)
 grid_estimators = []
 scores_list = []
 
-for train_cv, test_cv in cv:
+for train_cv, test_cv in cv.spilt(X, y):
     # Setup grid parameters
     ada = AdaBoostRegressor()
     adaboost_params = {
@@ -59,3 +59,15 @@ for train_cv, test_cv in cv:
     y_pred = ada_cv.predict(X[test_cv])
 
     scores_list.append(mean_squared_error(y[test_cv], y_pred))
+
+# make model based on the mean
+ada_learning_rate = np.median(
+    np.asarray([est.learning_rate for est in grid_estimators]))
+
+ada_n_estimators = int(
+    np.median(np.asarray([est.n_estimators for est in grid_estimators])))
+
+ada_mean = AdaBoostRegressor(
+    n_estimators=ada_n_estimators, learning_rate=ada_learning_rate)
+
+scores = cross_val_score(ada_mean, X, y, cv=cv, scoring="mean_squared_error")
